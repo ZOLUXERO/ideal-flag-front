@@ -1,13 +1,19 @@
 import "./styles.css"
 import Header from "../header"
-import Preview from "../preview"
+import React from "react"
+
+interface PageProps {
+    content: React.ReactNode;
+}
 
 
-export default function Homepage() {
+const Page: React.FC<PageProps> = ({content}) => {
     return(
         <div className="shape rect rectangle-8df946556b72 centered">
             <Header />
-            <Preview />
+            {content}
         </div>
     )
 }
+
+export default Page;

@@ -1,15 +1,25 @@
 import "./assets/styles.css"
-import Homepage from "./components/homepage"
+import Page from "./components/page"
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Preview from "./components/preview"
+import Project from "./components/project";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Page content={<Preview />}/>
+  },
+  {
+    path: "project/",
+    element: <Page content={<Project />}/>
+  },
+
+])
+
 
 export default function App() {
   return (
-    <Homepage />
-    //<div className="shape rect rectangle-8df946556b72">
-    //  <div className="App">
-    //    <img src={logo} className="ahh" alt="logo"/>
-    //  </div>
-    //  <Preview />
-    //</div>
+    <RouterProvider router={router} />
   )
 }

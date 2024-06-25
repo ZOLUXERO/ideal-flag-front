@@ -1,0 +1,14 @@
+.pj-card-fil {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+.pj-title {
+    font-size: 30px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.pj-content {
+  background: rgba(0, 0, 0, 0.6);
+}
