@@ -12,3 +12,16 @@
 .pj-content {
   background: rgba(0, 0, 0, 0.6);
 }
+
+.pname-black {
+  color: #000000;
+  padding-left: 30px;
+  line-break: auto;
+  overflow-wrap: initial;
+  text-rendering: geometricPrecision;
+  text-decoration: none;
+  letter-spacing: 0px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+}

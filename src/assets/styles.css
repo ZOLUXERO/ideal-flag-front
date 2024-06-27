@@ -18,3 +18,20 @@ body {
 }
 
 .text-node { background-clip: text !important; -webkit-background-clip: text !important; }
+
+.stack-p-w {
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.pname-theme {
+  color: #512d60;
+  padding-left: 30px;
+  line-break: auto;
+  overflow-wrap: initial;
+  text-rendering: geometricPrecision;
+  text-decoration: none;
+  letter-spacing: 0px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+}
