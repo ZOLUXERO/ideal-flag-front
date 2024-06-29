@@ -2,7 +2,7 @@ import "./styles.css"
 import { Stack, Container, Row, Col, Button } from 'react-bootstrap';
 import gato from "../../assets/gato-perro.svg"
 import perro from "../../assets/perro-gato.svg"
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Preview = () => {
@@ -16,7 +16,7 @@ const Preview = () => {
     return (
         <Container>
             <Col md={9} className="rounded m-auto mt-5 img-container">
-                <img src={checked ? perro : gato} className="d-block mx-auto img-fluid w-50" alt="logo"/>
+                <img src={checked ? perro : gato} className="d-block mx-auto img-fluid w-50" alt="logo" />
             </Col>
             <Col md={9} className="rounded m-auto mt-5">
                 <div>
@@ -32,7 +32,7 @@ const Preview = () => {
                             </Col>
                             <Col>
                                 <label className="switch" htmlFor="checkbox2">
-                                    <input type="checkbox" id="checkbox2" onChange={handleChange}/>
+                                    <input type="checkbox" id="checkbox2" onChange={handleChange} />
                                     <div className="slider round"></div>
                                 </label>
                             </Col>
@@ -43,7 +43,7 @@ const Preview = () => {
             <Col md={9} className="m-auto mt-5 text-center">
                 <Link to={"/project"}>
                     <Button style={{
-                        color:'rgba(67, 8, 255, 0.7)',
+                        color: 'rgba(67, 8, 255, 0.7)',
                         caretColor: 'rgba(67, 8, 255, 0.7)',
                         backgroundColor: 'rgba(255, 255, 255, 0.8)',
                         border: '4px solid rgba(67, 8, 255, 0.4)',

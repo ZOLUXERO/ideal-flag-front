@@ -7,8 +7,8 @@ interface PageProps {
 }
 
 
-const Page: React.FC<PageProps> = ({content}) => {
-    return(
+const Page: React.FC<PageProps> = ({ content }) => {
+    return (
         <div className="shape rect rectangle-8df946556b72 centered">
             <Header />
             {content}

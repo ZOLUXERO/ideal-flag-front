@@ -1,28 +1,26 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css"
-import { Container, Row, Col, Form, Stack, Button } from "react-bootstrap";
-import trashIcon from "../../assets/trash.svg"
+import { Container, Row, Col, Stack } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import ButtonModal from "../buttonModal";
-
-
-/**
- * TODO: falta eliminar el proyecto cuando se de click y la creacion 
- */
-
+import ModalCreate from "./modal-create";
+import ModalDelete from "./modal-delete";
 
 const Project = () => {
     const [data, setData] = useState<any[]>([]);
 
-    useEffect(() => {
+    const fetchData = async () => {
         fetch("http://localhost:3001/projects")
-        .then(response => response.json())
-        .then(json => setData(json))
-        .catch(error => console.error(error));
-    }, [])
+            .then(response => response.json())
+            .then(json => setData(json))
+            .catch(error => console.error(error));
+    }
 
-    const deleteProject = (id: number) => {
-        console.log("deletingss" + id);
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const handleDataUpdate = () => {
+        fetchData();
     }
 
     return (
@@ -36,37 +34,7 @@ const Project = () => {
                             </span>
                         </Col>
                         <Col className="text-end">
-                            <ButtonModal 
-                                content={
-                                    {
-                                        button_text: "Crear proyecto",
-                                        modal_buton_text: "Crear",
-                                        modal_heading: "Nuevo proyecto",
-                                        modal_body: 
-                                            <Form>
-                                                <Form.Group className="mb-3" controlId="projectForm.nombre">
-                                                    <Form.Label>Nombre</Form.Label>
-                                                    <Form.Control
-                                                        type="text"
-                                                        placeholder="nombre proyecto"
-                                                        autoFocus
-                                                    />
-                                                </Form.Group>
-                                                <Form.Group
-                                                    className="mb-3"
-                                                    controlId="projectForm.descripcion"
-                                                >
-                                                    <Form.Label>Descripcion</Form.Label>
-                                                    <Form.Control 
-                                                        type="text"
-                                                        placeholder="descripcion del proyecto"
-                                                    />
-                                                </Form.Group>
-                                            </Form>
-                                        ,
-                                    }
-                                }>
-                            </ButtonModal>
+                            <ModalCreate handleDataUpdate={handleDataUpdate}></ModalCreate>
                         </Col>
                     </Row>
                     <Row>
@@ -78,39 +46,24 @@ const Project = () => {
                                             <div className="p-3 stack-p-w border mt-2 mb-2">
                                                 <Row className="align-items-center">
                                                     <Col xs={9} className="align-items-center">
-                                                        <Link to={""} style={{textDecoration: 'none'}}>
+                                                        <Link to={""} style={{ textDecoration: 'none' }}>
                                                             <span className="pname-black">{dataItem.projectName}</span>
                                                         </Link>
                                                     </Col>
                                                     <Col>
-                                                        <ButtonModal 
-                                                            content={
-                                                                {
-                                                                    button_text: 
-                                                                        <img src={trashIcon} className="logo" alt="logo" onClick={() => deleteProject(dataItem.idProject)}/>
-                                                                    ,
-                                                                    modal_buton_text: "Eliminar",
-                                                                    modal_heading: "",
-                                                                    modal_body: 
-                                                                        <span>
-                                                                            aggggg {dataItem.idProject}
-                                                                        </span>
-                                                                    ,
-                                                                }
-                                                            }>
-                                                        </ButtonModal>
+                                                        <ModalDelete content="alhlh" id_project={dataItem.idProject} handleDataUpdate={handleDataUpdate}></ModalDelete>
                                                     </Col>
                                                 </Row>
                                             </div>
                                         ))}
                                     </Stack>
                                 )
-                                : 
-                                (
-                                    <Row className="text-center m-5">
-                                        <span className="span-white">No hay proyectos creados</span>
-                                    </Row>
-                                )
+                                    :
+                                    (
+                                        <Row className="text-center m-5">
+                                            <span className="span-white">No hay proyectos creados</span>
+                                        </Row>
+                                    )
                             }
                         </Col>
                     </Row>
@@ -120,5 +73,6 @@ const Project = () => {
 
     );
 }
+//<img src={trashIcon} className="logo" alt="logo" onClick={() => deleteProject(dataItem.idProject)}/>
 
 export default Project;

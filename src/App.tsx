@@ -8,11 +8,11 @@ import Project from "./components/project";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Page content={<Preview />}/>
+    element: <Page content={<Preview />} />
   },
   {
     path: "project/",
-    element: <Page content={<Project />}/>
+    element: <Page content={<Project />} />
   },
 
 ])
