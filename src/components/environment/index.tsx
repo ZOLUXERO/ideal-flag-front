@@ -1,26 +1,30 @@
 import React, { useEffect, useState } from "react";
-import "./styles.css"
-import { Container, Row, Col, Stack } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Row, Col, Stack, Dropdown, Button } from "react-bootstrap";
+import { Link, useLocation } from "react-router-dom";
 import ModalCreate from "./modal-create";
 import ModalDelete from "./modal-delete";
 
-const Project = () => {
-    const [data, setData] = useState<any[]>([]);
+const Environment = () => {
+    const [environment, setEnv] = useState<any[]>([]);
+    const location = useLocation();
 
-    const fetchData = async () => {
-        fetch("http://localhost:3001/projects")
+    const idProject = location.state.idProject;
+
+    const fetchEnvironments = async () => {
+        fetch("http://localhost:3001/environments")
             .then(response => response.json())
-            .then(json => setData(json))
+            .then(json => setEnv(json))
             .catch(error => console.error(error));
+
+            console.log(environment);
     }
 
     useEffect(() => {
-        fetchData();
+        fetchEnvironments();
     }, []);
 
     const handleDataUpdate = () => {
-        fetchData();
+        fetchEnvironments();
     }
 
     return (
@@ -28,30 +32,30 @@ const Project = () => {
             <Row>
                 <Col md={11} className="pj-card-fil rounded m-auto mt-5 mb-5">
                     <Row className="mt-3 px-2">
-                        <Col className="text-center">
+                        <Col className="ms-2">
                             <span className="pj-title">
-                                Proyectos
+                                Ambientes
                             </span>
                         </Col>
                         <Col className="text-end">
-                            <ModalCreate handleDataUpdate={handleDataUpdate}></ModalCreate>
+                            <ModalCreate handleDataUpdate={handleDataUpdate} propIdProject={idProject}></ModalCreate>
                         </Col>
                     </Row>
                     <Row>
                         <Col md={11} className="pj-content m-auto mt-3 mb-3">
                             {
-                                (data && data.length > 0) ? (
+                                (environment && environment.length > 0) ? (
                                     <Stack className="mt-2 mb-2">
-                                        {data.map((dataItem) => (
+                                        {environment.map((dataItem) => (
                                             <div className="p-3 stack-p-w border mt-2 mb-2">
                                                 <Row className="align-items-center">
                                                     <Col xs={9} className="align-items-center">
-                                                        <Link to={{pathname: "/flags"}} state={{ idProject: dataItem.idProject, idEnvironment: 0 }} style={{ textDecoration: 'none' }}>
-                                                            <span className="pname-black">{dataItem.projectName}</span>
+                                                        <Link to={"/flags"} state={{ idProject: idProject }} style={{ textDecoration: 'none' }}>
+                                                            <span className="pname-black">{dataItem.name}</span>
                                                         </Link>
                                                     </Col>
                                                     <Col>
-                                                        <ModalDelete content="alhlh" id_project={dataItem.idProject} handleDataUpdate={handleDataUpdate}></ModalDelete>
+                                                        <ModalDelete content="ahlhlhl" handleDataUpdate={handleDataUpdate} id_environment={dataItem.idEnvironment} ></ModalDelete>
                                                     </Col>
                                                 </Row>
                                             </div>
@@ -61,7 +65,9 @@ const Project = () => {
                                     :
                                     (
                                         <Row className="text-center m-5">
-                                            <span className="span-white">No hay proyectos creados</span>
+                                            <span className="span-white">
+                                                No hay ambientes creados {idProject}
+                                            </span>
                                         </Row>
                                     )
                             }
@@ -74,4 +80,4 @@ const Project = () => {
     );
 }
 
-export default Project;
+export default Environment;

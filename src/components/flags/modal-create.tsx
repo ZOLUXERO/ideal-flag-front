@@ -70,7 +70,7 @@ const ModalCreate: React.FC<ModalProps> = ({ handleDataUpdate }) => {
         <>
             <Button variant="primary" onClick={handleShow}
                 style={btn_color}>
-                Crear proyecto
+                Crear ambiente
             </Button>
             <Modal
                 className='mt-5'

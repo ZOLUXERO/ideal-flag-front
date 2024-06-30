@@ -13,22 +13,23 @@ const btn_color = {
 }
 
 interface FormData {
-    projectName: string;
+    name: string;
     description: string;
+    idProject: number;
     enabled: boolean;
 }
 
 interface ModalProps {
     handleDataUpdate: () => void;
+    propIdProject: number;
 }
 
-const ModalCreate: React.FC<ModalProps> = ({ handleDataUpdate }) => {
+const ModalCreate: React.FC<ModalProps> = ({ handleDataUpdate, propIdProject }) => {
     const [show, setShow] = useState(false);
-    const [formData, setFormData] = useState<FormData>({ projectName: '', description: '', enabled: true });
+    const [formData, setFormData] = useState<FormData>({ name: '', description: '', idProject: propIdProject, enabled: true });
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -42,7 +43,7 @@ const ModalCreate: React.FC<ModalProps> = ({ handleDataUpdate }) => {
 
     const handleFormSubmit = async (data: FormData) => {
         try {
-            const response = await fetch('http://localhost:3001/projects', {
+            const response = await fetch('http://localhost:3001/environments', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -70,7 +71,7 @@ const ModalCreate: React.FC<ModalProps> = ({ handleDataUpdate }) => {
         <>
             <Button variant="primary" onClick={handleShow}
                 style={btn_color}>
-                Crear proyecto
+                Crear ambiente
             </Button>
             <Modal
                 className='mt-5'
@@ -79,7 +80,7 @@ const ModalCreate: React.FC<ModalProps> = ({ handleDataUpdate }) => {
                 centered
             >
                 <Modal.Header closeButton>
-                    <Modal.Title style={{ color: 'rgba(67, 8, 255, 0.8)' }}>Nuevo Proyecto</Modal.Title>
+                    <Modal.Title style={{ color: 'rgba(67, 8, 255, 0.8)' }}>Nuevo Ambiente</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={handleSubmit}>
@@ -87,10 +88,10 @@ const ModalCreate: React.FC<ModalProps> = ({ handleDataUpdate }) => {
                             <Form.Label>Nombre</Form.Label>
                             <Form.Control
                                 type="text"
-                                name="projectName"
-                                value={formData.projectName}
+                                name="name"
+                                value={formData.name}
                                 onChange={handleChange}
-                                placeholder="nombre proyecto"
+                                placeholder="nombre ambiente"
                                 autoFocus
                                 required
                             />
@@ -105,7 +106,7 @@ const ModalCreate: React.FC<ModalProps> = ({ handleDataUpdate }) => {
                                 name="description"
                                 value={formData.description}
                                 onChange={handleChange}
-                                placeholder="descripcion del proyecto"
+                                placeholder="descripcion del ambiente"
                                 required
                             />
                         </Form.Group>
