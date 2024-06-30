@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Col, Stack, Dropdown, Button, Form } from "react-bootstrap";
 import { Link, useLocation } from "react-router-dom";
 import ModalCreate from "./modal-create";
+import ModalDelete from "./modal-delete";
 
 const btn_color = {
     color: 'rgba(67, 8, 255, 0.7)',
@@ -17,32 +18,37 @@ const btn_color = {
 const Flags = () => {
     const [data, setData] = useState<any[]>([]);
     const [environment, setEnv] = useState<any[]>([]);
-    const [currentEnv, setCurrentEnv] = useState();
     const location = useLocation();
+    const [checked, setChecked] = useState(false);
 
-    const idProject = location.state.idProject;
-    const idEnvironment = location.state.idEnvironment;
+    const [stateEnv, setStateEnv] = useState();
+
+    const handleChange = (): void => {
+        setChecked(!checked);
+        console.log("Checkbox changed:", !checked);
+    }
+
+    const idProject = location.state !== null ? location.state.idProject : 0;
+    const idEnv = location.state !== null ? location.state.idEnvironment : 0;
 
     const fetchData = async () => {
-        fetch("http://localhost:3001/ff/" + idProject)
+        console.log("request", stateEnv)
+        return await fetch("http://localhost:3001/ff/env/" + idEnv)
             .then(response => response.json())
             .then(json => setData(json))
             .catch(error => console.error(error));
     }
 
     const fetchEnvironments = async () => {
-        fetch("http://localhost:3001/environments")
+        return await fetch("http://localhost:3001/environments/project/" + idProject)
             .then(response => response.json())
             .then(json => setEnv(json))
             .catch(error => console.error(error));
-
-        console.log(environment);
-        setCurrentEnv(environment.find(env => env.idEnvironment === idEnvironment));
     }
 
     useEffect(() => {
-        fetchData();
         fetchEnvironments();
+        fetchData();
     }, []);
 
     const handleDataUpdate = () => {
@@ -60,7 +66,7 @@ const Flags = () => {
                 <Col className="m-auto mt-5 mb-5 text-end me-3">
                     {
                         (environment && environment.length > 0) ?
-                            <Button style={btn_color}>Crear feature</Button>
+                            <ModalCreate handleDataUpdate={handleDataUpdate} id_project={idProject}></ModalCreate>
                         : <h1></h1>
                     }
                 </Col>
@@ -73,7 +79,6 @@ const Flags = () => {
                                 Flags&nbsp;
                             </span>
                             <span className="pj-subtitle">
-                                a
                             </span>
                         </Col>
                         <Col className="text-end">
@@ -107,12 +112,19 @@ const Flags = () => {
                                         {data.map((dataItem) => (
                                             <div className="p-3 stack-p-w border mt-2 mb-2">
                                                 <Row className="align-items-center">
-                                                    <Col xs={9} className="align-items-center">
+                                                    <Col xs={8} className="align-items-center">
                                                         <Link to={""} style={{ textDecoration: 'none' }}>
-                                                            <span className="pname-black">{dataItem.projectName}</span>
+                                                            <span className="pname-black">{dataItem.featureFlag.flagName}</span>
                                                         </Link>
                                                     </Col>
                                                     <Col>
+                                                        <label className="switch" htmlFor={dataItem.featureFlag.idFeatureFlag}>
+                                                            <input type="checkbox" id={dataItem.featureFlag.idFeatureFlag} onChange={handleChange} />
+                                                            <div className="slider round"></div>
+                                                        </label>
+                                                    </Col>
+                                                    <Col>
+                                                        <ModalDelete handleDataUpdate={handleDataUpdate} content="ahhlhklkh" id_flag={dataItem.featureFlag.idFeatureFlag}></ModalDelete>
                                                     </Col>
                                                 </Row>
                                             </div>

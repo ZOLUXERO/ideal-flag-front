@@ -15,19 +15,19 @@ const btn_color = {
 
 interface BodyContent {
     content: string;
-    id_environment: number;
+    id_flag: number;
     handleDataUpdate: () => void;
 }
 
-const ModalDelete: React.FC<BodyContent> = ({ content, id_environment, handleDataUpdate }) => {
+const ModalDelete: React.FC<BodyContent> = ({ content, id_flag, handleDataUpdate }) => {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const deleteEnvironment = async (id: number) => {
+    const deleteFlag = async (id: number) => {
         try {
-            const response = await fetch("http://localhost:3001/environments/" + id, {
+            const response = await fetch("http://localhost:3001/feature_flags/" + id, {
                 method: 'DELETE',
             });
 
@@ -63,7 +63,7 @@ const ModalDelete: React.FC<BodyContent> = ({ content, id_environment, handleDat
                 </Modal.Body>
                 <Modal.Footer>
                     <Col className='text-center'>
-                        <Button onClick={() => { deleteEnvironment(id_environment) }} type='submit'
+                        <Button onClick={() => { deleteFlag(id_flag) }} type='submit'
                             style={btn_color}>
                             Eliminar
                         </Button>

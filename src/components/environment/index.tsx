@@ -11,7 +11,7 @@ const Environment = () => {
     const idProject = location.state.idProject;
 
     const fetchEnvironments = async () => {
-        fetch("http://localhost:3001/environments")
+        fetch("http://localhost:3001/environments/project/" + idProject)
             .then(response => response.json())
             .then(json => setEnv(json))
             .catch(error => console.error(error));
@@ -50,7 +50,7 @@ const Environment = () => {
                                             <div className="p-3 stack-p-w border mt-2 mb-2">
                                                 <Row className="align-items-center">
                                                     <Col xs={9} className="align-items-center">
-                                                        <Link to={"/flags"} state={{ idProject: idProject }} style={{ textDecoration: 'none' }}>
+                                                        <Link to={"/flags"} state={{ idProject: idProject, idEnvironment: dataItem.idEnvironment }} style={{ textDecoration: 'none' }}>
                                                             <span className="pname-black">{dataItem.name}</span>
                                                         </Link>
                                                     </Col>
